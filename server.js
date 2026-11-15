@@ -35,7 +35,16 @@ async function order(req,res){
 }
 http.createServer(async(req,res)=>{
  const pathname=new URL(req.url,'http://localhost').pathname;
- if(pathname==='/api/order')return req.method==='POST'?order(req,res):send(res,405,{error:'Method not allowed'});
+ if(pathname==='/api/order'){
+  // The booking form is public and does not send cookies or authorization headers.
+  // Allow it to submit from the free static-site origin and the custom domain.
+  res.setHeader('Access-Control-Allow-Origin','*');
+  res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type');
+  res.setHeader('Access-Control-Max-Age','86400');
+  if(req.method==='OPTIONS'){res.writeHead(204);return res.end();}
+  return req.method==='POST'?order(req,res):send(res,405,{error:'Method not allowed'});
+ }
  if(req.method!=='GET'&&req.method!=='HEAD')return send(res,405,{error:'Method not allowed'});
  const file=pathname==='/'?'index.html':decodeURIComponent(pathname).slice(1);
  const target=path.resolve(ROOT,file);

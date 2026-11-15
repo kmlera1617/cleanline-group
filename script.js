@@ -1,3 +1,4 @@
+const API_BASE_URL='https://cleanline-group-1.onrender.com';
 const headerPolish=document.createElement('link');headerPolish.rel='stylesheet';headerPolish.href='header-polish.css';document.head.append(headerPolish);
 const servicesPolish=document.createElement('link');servicesPolish.rel='stylesheet';servicesPolish.href='services-polish.css';document.head.append(servicesPolish);
 const menu=document.querySelector('.menu-toggle');const nav=document.querySelector('.nav-links');if(menu&&nav){menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});}
@@ -79,7 +80,7 @@ if(form){
   data.website='CleanLine Group';
   result.hidden=true;submitButton.disabled=true;submitButton.textContent='Надсилаємо…';
   try{
-   const response=await fetch('/api/order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+   const response=await fetch(`${API_BASE_URL}/api/order`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
    const body=await response.json().catch(()=>({}));
    if(!response.ok||!body.ok)throw new Error(body.error||'Не вдалося надіслати заявку. Спробуйте ще раз.');
    if(typeof window.fbq==='function')window.fbq('track','Lead');

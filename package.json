@@ -1,1 +1,1 @@
-{"name":"cleanline-group-site","version":"1.0.0","private":true,"scripts":{"start":"node server.js"},"engines":{"node":">=20"}}
+{"name":"cleanline-group-site","version":"1.0.0","private":true,"scripts":{"start":"node server.js","build:static":"node build-static.js"},"engines":{"node":">=20"}}
